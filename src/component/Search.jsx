@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import  { SpaceXDataContext }  from '../Context/SpaceXDataContext';
+import { Grid } from './Grid';
 
-const Search = () => {
+export const Search = () => {
     const { dataAll, setDataALL } = useContext(SpaceXDataContext);
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("");
@@ -11,11 +12,14 @@ const Search = () => {
           `https://api.spacexdata.com/v3/capsules/?${filter}=${search}`
         );
         const res = await data.json();
-        console.log(res);
+        // console.log(res);
         setDataALL(res);
       };
+
+      
   return (
-    <div className="mt-10  w-1/2  border-2 font-mono border-red-600 p-2">
+    <>
+    <div className="mt-10 md:mt-5 sm:mt-5  xl:w-1/2 md:w sm:w  sm:m-1  p-2">
       <div className='flex flex-wrap   justify-evenly ' >
         <div>
           <span className="mr-2" >Search </span>
@@ -44,12 +48,14 @@ const Search = () => {
             <option value="type">Type</option>
           </select>
         </div>
-        <button   className="rounded p-1 outline outline-offset-2 outline-1 outline-black-500"
+        <button   className="rounded p-0 outline outline-offset-2 outline-1 outline-black-500"
         onClick={() => searchData()}>Search</button>
       </div>
-  
+   
     </div>
+      <Grid dataAll={dataAll} />
+    </>
   )
 }
 
-export default Search
+
