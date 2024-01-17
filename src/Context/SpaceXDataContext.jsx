@@ -4,12 +4,14 @@ export const SpaceXDataContext = createContext();
 
 
 export const SpaceXDataProvider = ({ children }) => {
+    let limit =10;
     const [dataAll, setDataALL] = useState([]);
-    const [limit, setlimit] = useState(10);
+    const [page, setPage] = useState(1);
+ 
    
 
     const fetchData = async () => {
-      const data = await fetch(`https://api.spacexdata.com/v3/capsules/?${limit}`);
+      const data = await fetch(`https://api.spacexdata.com/v3/capsules?${limit}&page=${page}`);
       const res = await data.json();
       setDataALL(res);
     };
@@ -19,10 +21,10 @@ export const SpaceXDataProvider = ({ children }) => {
   
     useEffect(() => {
       fetchData();
-    },[]);
+    },[page, limit]);
 
   return (
-    <SpaceXDataContext.Provider value={{dataAll, setDataALL}}>
+    <SpaceXDataContext.Provider value={{dataAll, setDataALL, page, setPage}}>
       {children}
     </SpaceXDataContext.Provider>
   );

@@ -3,20 +3,29 @@ import  { SpaceXDataContext }  from '../Context/SpaceXDataContext';
 import { Grid } from './Grid';
 
 export const Search = () => {
-    const { dataAll, setDataALL } = useContext(SpaceXDataContext);
+    const { dataAll, setDataALL, page, setPage } = useContext(SpaceXDataContext);
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("");
+    const [err, setErr] = useState(null);
 
     const searchData = async () => {
+      try{
         const data = await fetch(
           `https://api.spacexdata.com/v3/capsules/?${filter}=${search}`
         );
         const res = await data.json();
-        // console.log(res);
+        console.log(res);
         setDataALL(res);
-      };
+        setErr(null);
+      }
+   
+    catch(err){
+      console.log(err)
+    }
+  }
 
-      
+    
+
   return (
     <>
     <div className="mt-10 md:mt-5 sm:mt-5  xl:w-1/2 md:w sm:w  sm:m-1  p-2">
@@ -43,13 +52,14 @@ export const Search = () => {
               setFilter(e.target.value);
             }}
           >
+            <option value="default">Default</option>
             <option value="status">Status</option>
             <option value="original_launch">Original Launch</option>
             <option value="type">Type</option>
           </select>
         </div>
         <button   className="rounded p-0 outline outline-offset-2 outline-1 outline-black-500"
-        onClick={() => searchData()}>Search</button>
+        onClick={()=>searchData()}>Search</button>
       </div>
    
     </div>
