@@ -6,7 +6,6 @@ export const Modal = ({
   hideModal = () => {},
 }) => {
   const modalRef = useRef(null);
-  console.log({ modalData });
 
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -25,6 +24,12 @@ export const Modal = ({
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [showModal]);
+
+  const modalDataKeys = Object.keys(modalData).filter(
+    (cur) =>
+      typeof modalData[cur] === "string" || typeof modalData[cur] === "number"
+  );
+
   return (
     <div>
       {showModal ? (
@@ -32,7 +37,7 @@ export const Modal = ({
           <div className="fixed inset-0 z-50  flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
             <div
               ref={modalRef}
-              className="relative w-500px h-600px bg-red-100 rounded p-10 leading-[2rem]"
+              className="relative w-[500px] h-[430px] bg-gray-300 rounded p-10   leading-[2rem]"
             >
               <div className="modal-content">
                 <button
@@ -43,49 +48,26 @@ export const Modal = ({
                 >
                   &times;
                 </button>
-                <h2 className="text-lg font-bold mb-4 underline">Capsule Data: </h2>
+                <h2 className="text-lg font-bold mb-4 underline">
+                  Capsule Data:{" "}
+                </h2>
                 <div>
-                  {" "}
-                  <span className="font-bold">Status: </span>
-                  {modalData.status}
-                </div>
-                <div>
-                  {" "}
-                  <span className="font-bold">Original_Launch: </span>
-                  {modalData.original_launch}
-                </div>
-                <div>
-                  {" "}
-                  <span className="font-bold">Type: </span>
-                  {modalData.type}
-                </div>
-                <div>
-                  {" "}
-                  <span className="font-bold">Details: </span>
-                  {modalData.details}
-                </div>
-                <div>
-                  {" "}
-                  <span className="font-bold">Original_launch_unix: </span>
-                  {modalData.original_launch_unix}
-                </div>
-                <div>
-                  {" "}
-                  <span className="font-bold">Landings: </span>
-                  {modalData.landings}
-                </div>
-                <div>
-                  {modalData.missions.map((name) => {
+                  {modalDataKeys.map((key) => {
+                    const value = modalData[key];
+
                     return (
                       <div>
-                        <div>
-                          <span className="font-bold">Name: </span>
-                          {name.name}
-                        </div>
-                        <div>
-                          <span className="font-bold">Flight: </span>
-                          {name.flight}
-                        </div>
+                        <span>
+                          {key
+                            .split("_")
+                            .map(
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .join(" ")}
+                          :{" "}
+                        </span>
+                        <span>{value}</span>
                       </div>
                     );
                   })}

@@ -1,30 +1,22 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from "react";
 
 export const SpaceXDataContext = createContext();
 
-
 export const SpaceXDataProvider = ({ children }) => {
-    let limit =10;
-    const [dataAll, setDataALL] = useState([]);
-    const [page, setPage] = useState(1);
- 
-   
+  const [dataAll, setDataALL] = useState([]);
 
-    const fetchData = async () => {
-      const data = await fetch(`https://api.spacexdata.com/v3/capsules?${limit}&page=${page}`);
-      const res = await data.json();
-      setDataALL(res);
-    };
-    
-  
-   
-  
-    useEffect(() => {
-      fetchData();
-    },[page, limit]);
+  const fetchData = async () => {
+    const data = await fetch("https://api.spacexdata.com/v3/capsules");
+    const res = await data.json();
+    setDataALL(res);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <SpaceXDataContext.Provider value={{dataAll, setDataALL, page, setPage}}>
+    <SpaceXDataContext.Provider value={{ dataAll, setDataALL }}>
       {children}
     </SpaceXDataContext.Provider>
   );
