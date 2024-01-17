@@ -4,12 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // import { BrowserRouter } from "react-router-dom";
-// import { SpaceXDataProvider } from "./Context/SpaceXDataContext";
+import { SpaceXDataProvider } from "./Context/SpaceXDataContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
- 
+ <SpaceXDataProvider>
     <App />
+    </SpaceXDataProvider>
    
 );
 
