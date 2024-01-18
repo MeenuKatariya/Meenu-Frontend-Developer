@@ -8,17 +8,20 @@ export const Search = () => {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
   const [currentPageData, setCurrentPageData] = useState([]);
+  const [loader,setLoader ] = useState(false);
 
   const searchData = async () => {
     try {
-      if (search == "" || filter == "") {
-        alert("Please fill value and select filter");
-      }
+      setLoader(true)
       const data = await fetch(
         `https://api.spacexdata.com/v3/capsules/?${filter}=${search}`
       );
+     
       const res = await data.json();
       setDataALL(res);
+      setLoader(false)
+     setFilter("");
+     setSearch("");
     } catch (err) {
       console.log(err);
     }
@@ -33,12 +36,13 @@ export const Search = () => {
 
   return (
     <>
+    
       <div className="mt-10 md:mt-5 sm:mt-5 p-2">
         <div className="flex flex-wrap  lg:justify-center sm:justify-left gap-10 ">
           <div>
-            <span className="mr-2">Search </span>
+            <span className="mr-2">Search: </span>
             <input
-              className="border-2 border-grey-1200 rounded pl-3 outline-none w-[20rem]"
+              className="border-2 border-grey-1200 rounded pl-3 outline-none w-[20rem] p-1"
               type="text"
               value={search}
               onChange={(e) => {
@@ -48,9 +52,9 @@ export const Search = () => {
             />
           </div>
           <div>
-            <span className="mr-2">Filter Data </span>{" "}
+            <span className="mr-2">Filter By: </span>{" "}
             <select
-              className="border-2 border-grey-1200 rounded pl-3"
+              className="border-2 border-grey-1200 rounded pl-3 p-1"
               value={filter}
               onChange={(e) => {
                 console.log({ e });
@@ -64,14 +68,23 @@ export const Search = () => {
             </select>
           </div>
           <button
-            className="rounded pl-3 pr-3  outline outline-offset-1 outline-1 outline-black-500"
+            className=" pl-3 pr-3 pt-0.3 outline outline-offset-1 outline-1 outline-black-500"
             onClick={() => searchData()}
           >
-            Go
+            Search
           </button>
         </div>
       </div>
-      <Grid dataAll={currentPageData} />
+      {
+      loader?   (
+      <div className="flex items-center justify-center">
+      
+      <div className="animate-spin rounded-full mt-5 h-6 w-6 border-t-4 border-blue-500 border-solid"></div>
+    </div> ) : null
+    
+     }
+       <Grid dataAll={currentPageData} />
+    
       <div className="mt-4 flex flex-wrap  justify-center gap-10 m-4 ">
         <button
           className={`p-1 outline outline-offset-2 outline-1 outline-black-500 font-mono pl-3 pr-3 ${

@@ -8,10 +8,6 @@ export const Grid = ({ dataAll }) => {
   const openModal = () => {
     setModalOpen(true);
   };
- 
-  
- 
- 
 
   const closeModal = () => {
     setModalOpen(false);
@@ -29,7 +25,7 @@ export const Grid = ({ dataAll }) => {
                 openModal();
               }}
               key={item.capsule_Serial}
-              className="border-2 border-grey-800 p-7 text-lg shadow-md rounded cursor-pointer"
+              className="border-1 border-grey-800 p-7 text-lg shadow-md  cursor-pointer"
             >
               <div>
                 <span className="font-bold">Capsule Id: </span>

@@ -4,7 +4,7 @@ import { Search } from "./component/Search";
 
 function App() {
   return (
-    <div>
+    <div className="bg-gray-200 pb-10">
       <Banner />
       <Search />
     </div>
