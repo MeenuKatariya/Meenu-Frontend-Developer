@@ -42,7 +42,7 @@ export const Search = () => {
           <div>
             <span className="mr-2">Search: </span>
             <input
-              className="border-2 border-grey-1200 rounded pl-3 outline-none w-[20rem] p-1"
+              className="border-2 border-grey-1200 rounded pl-3 outline-none w-[20rem] p-1 bg-gray-200"
               type="text"
               value={search}
               onChange={(e) => {
@@ -54,7 +54,7 @@ export const Search = () => {
           <div>
             <span className="mr-2">Filter By: </span>{" "}
             <select
-              className="border-2 border-grey-1200 rounded pl-3 p-1"
+              className="border-2 border-grey-1200 rounded pl-3 p-1 bg-gray-200"
               value={filter}
               onChange={(e) => {
                 console.log({ e });
